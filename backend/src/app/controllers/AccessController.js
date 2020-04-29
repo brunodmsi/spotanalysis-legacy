@@ -20,7 +20,7 @@ class AccessController {
     const token = req.query.token || null;
 
     try {
-      await api.post('/', {
+      await api.post('/', null, {
         query: {
           access_token: token,
           redirect_uri: process.env.REDIRECT_URI,
