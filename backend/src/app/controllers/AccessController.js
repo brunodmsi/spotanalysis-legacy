@@ -21,11 +21,11 @@ class AccessController {
 
     try {
       await api.post('/', {
+        query: {
           access_token: token,
           redirect_uri: process.env.REDIRECT_URI,
           token_type: 'Bearer',
-      },
-      {
+        },
         headers: {
           Authorization: `Basic ${new Buffer(
             `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`,
