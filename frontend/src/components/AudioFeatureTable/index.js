@@ -32,7 +32,6 @@ const AudioFeatureTable = ({ track }) => (
     </SongContainer>
 
     <Table>
-      {console.log(track)}
       <thead>
         <tr>
           <th>AudioFeatures</th>
