@@ -1,5 +1,6 @@
 const querystring = require('querystring');
 const api = require('../../services/api');
+const request = require('request');
 
 require('dotenv/config');
 
@@ -20,21 +21,22 @@ class AccessController {
     const token = req.query.token || null;
 
     try {
-      await api.post('/', null, {
-        query: {
+      const authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        form: {
           access_token: token,
-          redirect_uri: process.env.REDIRECT_URI,
-          token_type: 'Bearer',
-          grant_type: 'client_credentials'
+          redirect_uri: REDIRECT_URI,
+          token_type: 'Bearer'
         },
         headers: {
           Authorization: `Basic ${new Buffer(
-            `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`,
-          ).toString('base64')}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
+            `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`
+          ).toString('base64')}`
         },
-      })
+        json: true
+      }
 
+      request.post(authOptions);
       res.redirect(process.env.REDIRECT_URI);
     } catch(err) {
       console.log(err);
@@ -44,17 +46,21 @@ class AccessController {
   async refresh(req, res) {
     const { code } = req.body;
 
-    await api.post('/', {
+    const authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      form: {
         grant_type: 'refresh_token',
-        refresh_token: code,
-    },
-    {
+        refresh_token: code
+      },
       headers: {
         Authorization: `Basic ${new Buffer(
-          `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`,
-        ).toString('base64')}`,
+          `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`
+        ).toString('base64')}`
       },
-    })
+      json: true
+    }
+
+    request.post(authOptions);
 
     return res.send();
   }

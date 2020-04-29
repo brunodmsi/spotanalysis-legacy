@@ -87,7 +87,7 @@ const Tracks = () => {
                 Times searched: <strong>{topTrack.times_searched}</strong>
               </p>
               <br />
-              <button type="button" onClick={() => this.setModalTrack(topTrack)}>
+              <button type="button" onClick={() => setModalTrack(topTrack)}>
                 Audio Features
               </button>
             </TopSongInfo>
@@ -117,7 +117,7 @@ const Tracks = () => {
                   <p>
                     Times searched: <strong>{track.times_searched}</strong>
                   </p>
-                  <button type="button" onClick={() => this.setModalTrack(track)}>
+                  <button type="button" onClick={() => setModalTrack(track)}>
                     Audio Features
                   </button>
                 </TopSongInfo>
@@ -136,7 +136,7 @@ const Tracks = () => {
         width="500"
         height="800"
         effect="fadeInUp"
-        onClickAway={() => this.closeModal()}
+        onClickAway={() => modalVisibility()}
       >
         <div style={{ backgroundColor: '#271F2C', alignItems: 'center' }}>
           {selectedTrack !== '' ? <AudioFeatureTable track={selectedTrack} /> : ''}

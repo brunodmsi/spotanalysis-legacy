@@ -32,7 +32,7 @@ const Main = () => {
     const ACCESS_TOKEN = localStorage.getItem('@Spotanalysis:accessToken');
     const param = window.location.hash;
 
-    if (ACCESS_TOKEN) {
+    if (!ACCESS_TOKEN) {
       if (param.startsWith('#access_token')) {
         const [, token] = param.split(/[=&]/);
         localStorage.setItem('@Spotanalysis:accessToken', token);
