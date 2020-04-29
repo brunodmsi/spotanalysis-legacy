@@ -18,7 +18,7 @@ class AccessController {
 
   async callback(req, res) {
     const token = req.query.token || null;
-
+try {
     await api.post('/', {
         access_token: token,
         redirect_uri: process.env.REDIRECT_URI,
@@ -29,8 +29,13 @@ class AccessController {
         Authorization: `Basic ${new Buffer(
           `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`,
         ).toString('base64')}`,
+	'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
+	res.redirect(process.env.REDIRECT_URI);
+  } catch(err) {
+  	console.log(err);
+  }
 
     res.redirect(process.env.REDIRECT_URI);
   }
