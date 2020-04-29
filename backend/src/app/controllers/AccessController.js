@@ -25,6 +25,7 @@ class AccessController {
           access_token: token,
           redirect_uri: process.env.REDIRECT_URI,
           token_type: 'Bearer',
+          grant_type: 'client_credentials'
         },
         headers: {
           Authorization: `Basic ${new Buffer(
@@ -33,7 +34,8 @@ class AccessController {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-    res.redirect(process.env.REDIRECT_URI);
+
+      res.redirect(process.env.REDIRECT_URI);
     } catch(err) {
       console.log(err);
     }
